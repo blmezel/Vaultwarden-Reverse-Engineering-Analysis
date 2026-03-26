@@ -50,16 +50,12 @@ Standart 5 aşamalı inceleme prosedürüne ek olarak, aşağıdaki ileri seviye
 
 ---
 
-## 4. Proje Zaman Çizelgesi ve Teslimatlar (Milestones)
+## 4. Proje Zaman Çizelgesi ve Teslimatlar (Agile Sprint)
 
 | Zaman Çizelgesi | Hedef Aşama | Planlanan Somut Çıktı (Deliverable) |
 | :--- | :--- | :--- |
-| **1. Hafta** | Kurulum ve Kaynak Denetimi | Kurulum hiyerarşisi, Hash doğrulama kanıtları raporu. |
-| **2. Hafta** | VM Temizlik ve Adli Bilişim | Diff analizi sonuçları, "İz Bırakmama" kanıt dökümleri. |
-| **3. Hafta** | CI/CD ve Pipeline Güvenliği | İş akışı (Workflow) diyagramları ve Webhook tehdit analizi. |
-| **4. Hafta** | Docker Layer ve İzolasyon | `dive` aracı analiz çıktıları, Rootless yapılandırma şeması. |
-| **5. Hafta** | Tehdit Modelleme & RAM Analizi | RAM Dump (Bellek Dökümü) Hex analiz ekran görüntüleri, STRIDE tehdit modeli tablosu. |
-| **6. Hafta** | Dokümantasyon ve Derleme | Tüm bulguları içeren, Mermaid.js diyagramlarıyla desteklenmiş Final Vize Raporu. |
+| **1. Hafta (Gün 1-7)** | Kurulum Analizi, VM Temizlik Testleri ve CI/CD Güvenliği (Adım 1, 2 ve 3) | Kurulum hiyerarşisi, Hash doğrulama kanıtları, "İz Bırakmama" Diff analizi ve İş Akışı diyagramları. |
+| **2. Hafta (Gün 8-14)** | Docker İzolasyonu, RAM/Kripto Analizi ve Final Dokümantasyon (Adım 4 ve 5) | `dive` aracı çıktıları, RAM Dump (Bellek Dökümü) Hex analiz ekran görüntüleri, STRIDE tehdit tablosu ve Final Vize Raporu. |
 
 ## 5. Başarı Kriterleri (Ölçülebilirlik)
 * Tüm mimari yapının en az 3 detaylı veri akış diyagramı (Data Flow Diagram) ile görselleştirilmesi.
