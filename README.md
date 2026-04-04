@@ -1,70 +1,89 @@
-# 🛡️ Vaultwarden: Tersine Mühendislik, Sistem Mimarisi ve Güvenlik Analizi
 
-**Proje Yürütücüsü:** Ezel Balım Atik  
-**Kurum:** İstinye Üniversitesi  
-**Bölüm:** Bilişim Güvenliği Teknolojisi  
-**Ders:** Tersine Mühendislik (Vize Projesi)  
-**Tarih:** Mart 2026  
 
----
+🛡️ Vaultwarden: Tersine Mühendislik, Sistem Mimarisi ve Güvenlik Analizi
+Proje Yürütücüsü: Ezel Balım Atik
 
-## 1. Yönetici Özeti (Executive Summary)
-Bu proje, endüstri standartlarında açık kaynaklı bir şifre yönetim sunucusu olan **Vaultwarden**'ın (Rust tabanlı Bitwarden backend alternatifi) uçtan uca güvenlik denetimini ve tersine mühendislik analizini kapsamaktadır. Çalışma, yazılımın statik kaynak kod analizinden başlayarak, dinamik bellek (RAM) davranışlarına, konteyner izolasyonundan CI/CD tedarik zinciri (Supply Chain) güvenliğine kadar geniş bir "Sistem Mimarı" perspektifi sunmayı hedeflemektedir.
+Kurum: İstinye Üniversitesi
 
-## 2. İleri Seviye Tersine Mühendislik Entegrasyonları (İnovasyon)
-Standart 5 aşamalı inceleme prosedürüne ek olarak, aşağıdaki ileri seviye güvenlik senaryoları projeye entegre edilmiştir:
+Bölüm: Bilişim Güvenliği Teknolojisi
 
-* **[Kriptografik Derinlik - Senaryo #10]:** Vaultwarden'ın AES-256-GCM ve PBKDF2/Argon2id şifreleme altyapısının incelenmesi. Kullanıcıya ait `Master Password`'ün entropi kalitesi, şifreleme/deşifreleme (encryption/decryption) döngüleri ve anahtarın hafızada tutulma mimarisi statik olarak analiz edilecektir.
-* **[Volatilite ve RAM Analizi - Senaryo #23]:** Uygulama aktif olarak çalışır durumdayken alınacak bellek dökümleri (RAM Dump) üzerinden; JWT (JSON Web Token) oturum anahtarlarının veya deşifre edilmiş hassas verilerin bellekte (Data-in-Use) "Plaintext" (açık metin) olarak sızıp sızmadığı adli bilişim teknikleriyle (Volatility/GDB) test edilecektir.
+Ders: Tersine Mühendislik (Vize Projesi)
 
----
+Tarih: Mart 2026
 
-## 3. Metodoloji: 5 Aşamalı Güvenlik ve Mimari Analizi
+1. Yönetici Özeti (Executive Summary)
+Bu çalışma, endüstri standartlarında açık kaynaklı bir şifre yönetim sunucusu olan Vaultwarden'ın uçtan uca güvenlik denetimini ve tersine mühendislik analizini kapsamaktadır. Standart bir analizden öteye geçerek; terminal seviyesinde karşılaşılan yapısal hataların tespiti, kriz yönetimi süreçleri ve sistemin proaktif savunma araçlarıyla (Ezel-Audit, Fail2Ban) sıkılaştırılmasını içeren kapsamlı bir "Siber Güvenlik Denetçisi" perspektifi sunar.
 
-### 🔍 Adım 1: Kurulum, Bağımlılık ve Statik Dosya Analizi
-* **Görev:** `Dockerfile`, `install.sh` ve `Cargo.toml` dosyalarının AST (Abstract Syntax Tree) seviyesinde veya manuel statik analizi.
-* **Kritik Analiz Noktaları:** * Sistem dışarıdan paket çekerken hash (imza) kontrolü (`Cargo.lock` bütünlüğü) yapıyor mu?
-  * Kurulum scriptleri `curl | bash` gibi güvensiz ve körü körüne çalıştırma (blind execution) zafiyetleri barındırıyor mu?
-  * Kurulum sırasında talep edilen Root/Admin yetkilerinin kapsamı nedir?
+2. Mimari Görselleştirme (Mermaid Analysis)
+Sistemin veri akış ve güvenlik katmanları aşağıda canlı olarak haritalandırılmıştır:
 
-### 🧹 Adım 2: İzolasyon Testi ve Adli Bilişim Temizliği (Forensics)
-* **Görev:** İzole bir Sanal Makine (VM) üzerinde kurulum, çalıştırma ve sistemden tamamen kaldırma (purge) süreçlerinin izlenmesi.
-* **Kritik Analiz Noktaları:** * Diferansiyel disk analizi ile kurulum öncesi ve sonrası sistem "Snapshot" karşılaştırması.
-  * İstenmeyen kalıntıların (Log dosyaları, `syslog` girdileri, açık bırakılan "Orphaned" portlar, arka plan Daemon servisleri ve SQLite veritabanı kalıntıları) tespiti.
+Kod snippet'i
+graph TD
+    User((Kullanıcı)) -->|HTTPS/JWT| Web[Vaultwarden Web UI]
+    Web -->|API Requests| API[Rust API Server]
+    API -->|Vault Data| DB[(SQLite Database)]
+    API -->|Logs| LogFile[vaultwarden.log]
+    
+    subgraph "Güvenlik ve Savunma Katmanları"
+    API -.->|Ezel-Audit| Scan[Zafiyet Taraması]
+    API -.->|Protect| F2B[Fail2Ban - IP Blocking]
+    API -.->|Verify| Hash[Hash Check]
+    end
+3. Metodoloji: 9 Adımlık Derinlemesine Denetim
+🔍 Adım 1: Kurulum ve Hash Doğrulama (Zorunlu)
+Kritik Soru: Paketler çekilirken imza kontrolü yapılıyor mu?
 
-### ⚙️ Adım 3: Sürekli Entegrasyon (CI/CD) ve İş Akışı Analizi
-* **Görev:** GitHub reposunda bulunan `.github/workflows` klasörünün ve otomasyon paketlerinin denetimi.
-* **Kritik Analiz Noktaları:** * "Webhook" mimarisinin güvenliği ve dışarıdan manipülasyon (Payload Injection) riskleri.
-  * Otomatik test kodlarının çalışma prensipleri ve Secrets (gizli anahtar) yönetimi.
+Bulgu: Kurulumun "Blind Execution" (Körü körüne) yapıldığı, sha256sum kontrollerinin eksik olduğu tespit edilmiştir. Bu durum bir MitM (Aradaki Adam) saldırısı riski olarak raporlanmıştır.
 
-### 🐳 Adım 4: Konteyner Güvenliği ve Docker Mimarisi
-* **Görev:** Docker imaj katmanlarının (Image Layers) ve `docker-compose.yml` yapılandırmasının parçalarına ayrılması.
-* **Kritik Analiz Noktaları:** * İmaj inşasında kullanılan Base OS ve gereksiz bileşen (Bloatware) analizi.
-  * Konteynerin "Rootless" (yetkisiz) ortamda çalışma kapasitesi.
-  * Konteyner içi depolama birimlerinin (Volumes) Host sisteme erişim yetkileri ve "Container Escape" (Konteynerden Kaçış) senaryoları.
+🧹 Adım 2: İzolasyon ve Forensics (Zorunlu)
+Kritik Soru: Sistemden gerçekten iz kalmıyor mu?
 
-### 🎯 Adım 5: Kaynak Kod, Tehdit Modelleme ve Giriş Noktası Tespiti
-* **Görev:** Rust kaynak kodu üzerinden uygulamanın uç noktalarının (Endpoints) ve yetkilendirme (Authentication) süreçlerinin haritalandırılması.
-* **Kritik Analiz Noktaları:** * Bir saldırganın gözünden JWT, Session veya OAuth mekanizmalarına yönelik "Logic Bypass" senaryoları.
-  * Rust dilinin bellek güvenliği özelliklerinin (Ownership/Borrowing) zafiyetleri (Örn: `unsafe` bloklarının taranması) ne ölçüde engellediğinin ispatı.
+Bulgu: Uygulama silinse dahi sqlite-wal ve sqlite-shm dosyalarının diskte kalıntı bıraktığı adli bilişim teknikleriyle ispatlanmıştır.
 
----
+⚙️ Adım 3: CI/CD ve Webhook Analizi (Zorunlu)
+Kritik Soru: Webhook nedir ve güvenliği nasıl etkiler?
 
-## 4. Proje Zaman Çizelgesi ve Teslimatlar (Agile Sprint)
+Bulgu: Yerel repoda .github/workflows klasörünün eksikliği "Shadow CI/CD" riski olarak tanımlanmıştır. Webhook'ların birer HTTP callback mekanizması olduğu ve otomasyon güvenliğindeki rolü analiz edilmiştir.
 
-| Zaman Çizelgesi | Hedef Aşama | Planlanan Somut Çıktı (Deliverable) |
-| :--- | :--- | :--- |
-| **1. Hafta (Gün 1-7)** | Kurulum Analizi, VM Temizlik Testleri ve CI/CD Güvenliği (Adım 1, 2 ve 3) | Kurulum hiyerarşisi, Hash doğrulama kanıtları, "İz Bırakmama" Diff analizi ve İş Akışı diyagramları. |
-| **2. Hafta (Gün 8-14)** | Docker İzolasyonu, RAM/Kripto Analizi ve Final Dokümantasyon (Adım 4 ve 5) | `dive` aracı çıktıları, RAM Dump (Bellek Dökümü) Hex analiz ekran görüntüleri, STRIDE tehdit tablosu ve Final Vize Raporu. |
+🐳 Adım 4: Docker Mimarisi ve VM Karşılaştırması (Zorunlu)
+Analiz: Docker'ın "Kernel Virtualization" mantığı ile VM'in "Hardware Virtualization" farkları incelenmiş, Alpine Linux tabanlı imaj katmanları parçalarına ayrılmıştır.
 
-## 5. Başarı Kriterleri (Ölçülebilirlik)
-* Tüm mimari yapının en az 3 detaylı veri akış diyagramı (Data Flow Diagram) ile görselleştirilmesi.
-* Kurulum ve temizlik aşamalarının %100 tekrarlanabilir (reproducible) adımlarla belgelenmesi.
-* Uygulamanın bellek (RAM) yönetimindeki güvenlik seviyesinin uygulamalı olarak kanıtlanması.
+🎯 Adım 5: Kaynak Kod ve Tehdit Modelleme (Zorunlu)
+Analiz: JWT (JSON Web Token) oturum yönetimi incelenmiş; "Token Hijacking" ve "Brute-Force" saldırılarına karşı sistemin direnci test edilmiştir.
 
-## 6. Araç Kutusu (Tech Stack & Toolkit)
-* **Sanallaştırma & Konteyner:** Docker Engine, Docker Compose, VirtualBox/VMware.
-* **Statik & Dinamik İkili Analiz:** Ghidra (Gerekirse), `strings`, `grep`, `strace`.
-* **Bellek Analizi:** GDB, Volatility.
-* **Ağ Trafiği ve İzolasyon:** Wireshark, `dive` (Docker layer analizi için).
-* **Dokümantasyon:** Markdown, Mermaid.js.
+📡 Adım 10: Ağ Katmanı ve Nmap Analizi (Bonus)
+Bulgu: nmap -sV taramasında tüm portların kapalı (Default Deny) olduğu görülmüş, sistemin dış saldırı yüzeyinin minimumda tutulduğu onaylanmıştır.
+
+🛠️ Adım 11: Ezel-Audit Özel Güvenlik Aracı (İnovasyon)
+Geliştirme: Sistemdeki zafiyetli izinleri (777), boş scriptleri ve DB kalıntılarını tek tuşla bulan ezel-audit.sh Bash scripti kodlanmıştır. Bu, projenin en özgün "çözüm odaklı" parçasıdır.
+
+🛡️ Adım 12: Fail2Ban ve Brute-Force Savunması (Bonus)
+Savunma: Hackerların deneme-yanılma saldırılarını durdurmak için IP tabanlı engelleme yapan vaultwarden-jail.local kurgusu oluşturulmuştur.
+
+📦 Adım 13: SCA ve Tedarik Zinciri Güvenliği (Bonus)
+Analiz: Rust kütüphanelerindeki (Crates) bağımlılıkların güvenliği ve "Supply Chain" saldırı riskleri dokümante edilmiştir.
+
+4. Araştırmacı Ayak İzi: Kriz Yönetimi (Logbook)
+Süreç boyunca karşılaşılan teknik engeller ve uygulanan çözümler:
+
+[Kriz - 04.04.2026]: scripts/tools altındaki hash-verify.sh ve port-check.sh dosyalarının içinin boş (0 byte) olduğu tespit edildi.
+
+[Çözüm]: Dosyalar manuel olarak işlevsel Bash kodlarıyla dolduruldu ve chmod +x ile yetkilendirildi.
+
+[Kriz - 04.04.2026]: GitHub Mermaid diyagramı render hatası verdi.
+
+[Çözüm]: Mermaid kodu graph TD yapısına göre yeniden düzenlenerek görselleştirme sağlandı.
+
+[Kriz - 04.04.2026]: Terminal hatalarından dolayı repoda hatalı isimli "hayalet dosyalar" oluştu.
+
+[Çözüm]: git rm ve rm komutlarıyla repo refactoring (temizlik) işlemi yapıldı.
+
+5. Gelecek Çalışma: Modern Dashboard
+Analiz sonuçlarını interaktif bir şekilde sunmak amacıyla, bu README'deki verileri temel alan Modern, Dark-Theme HTML/CSS Güvenlik Paneli bir sonraki fazda yayına alınacaktır.
+
+6. Araç Kutusu (Toolkit)
+Analiz: Nmap, ezel-audit.sh, netstat, Docker Engine.
+
+Dokümantasyon: Markdown, Mermaid.js.
+
+Savunma: Fail2Ban Config, Unix Permissions Management.
