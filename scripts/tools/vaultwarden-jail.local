@@ -1,0 +1,11 @@
+[vaultwarden]
+enabled = true
+port = 80,443,3012
+filter = vaultwarden
+logpath = /var/log/vaultwarden.log
+# Hacker 3 kere yanlış girerse:
+maxretry = 3
+# 3600 saniye (1 saat) boyunca IP adresi engellenecek (Ban):
+bantime = 3600
+# 10 dakika içindeki denemeler sayılacak:
+findtime = 600
