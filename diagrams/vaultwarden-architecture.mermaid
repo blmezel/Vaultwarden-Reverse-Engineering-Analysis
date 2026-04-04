@@ -1,0 +1,11 @@
+graph TD
+    User((Kullanıcı)) -->|HTTPS/JWT| Web[Vaultwarden Web UI]
+    Web -->|API Requests| API[Rust API Server]
+    API -->|Vault Data| DB[(SQLite Database)]
+    API -->|Logs| LogFile[vaultwarden.log]
+    Admin[Admin Panel] -->|Management| API
+
+    subgraph "Güvenlik Katmanları"
+    API -.->|Check| Hash[Hash Verification]
+    API -.->|Protect| F2B[Fail2Ban]
+    end
