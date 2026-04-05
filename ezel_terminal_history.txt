@@ -1,0 +1,50 @@
+# --- VAULTWARDEN SIBER GUVENLIK ANALIZI - TUM TERMINAL GECMISI ---
+
+# 1. Proje Dizini ve Guvenlik Araclari (Ezel-Audit) Hazirligi
+cd ~
+git clone https://github.com/blmezel/Vaultwarden-Reverse-Engineering-Analysis.git
+cd Vaultwarden-Reverse-Engineering-Analysis
+mkdir -p scripts/tools
+nano scripts/tools/ezel-audit.sh
+chmod +x scripts/tools/ezel-audit.sh
+./scripts/tools/ezel-audit.sh
+
+# 2. Savunma Katmani: Fail2Ban Yapilandirmasi
+sudo apt-get install fail2ban -y
+sudo nano /etc/fail2ban/jail.local
+sudo systemctl restart fail2ban
+
+# 3. Sistem Krizi: 0 Byte Disk Sorunu ve Temizlik
+sudo apt update
+sudo apt-get clean
+sudo apt-get autoremove -y
+sudo journalctl --vacuum-time=1d
+df -h
+
+# 4. Rust ve Cargo Kurulumu
+sudo apt install -y cargo
+cargo --version
+
+# 5. Tersine Muhendislik: Komut Cevirici (Disassembler) Geliştirme
+cargo new komut-cevirici
+cd komut-cevirici
+nano Cargo.toml
+nano src/main.rs
+cargo build
+cargo run
+cd ..
+
+# 6. Ag Guvenligi: Paket Cerrahi (Sniffer) Gelistirme
+cargo new paket-cerrahi
+cd paket-cerrahi
+nano Cargo.toml
+nano src/main.rs
+cargo build
+sudo ./target/debug/paket-cerrahi
+cd ..
+
+# 7. Kanitlarin Toplanmasi ve GitHub'a Teslim Edilmesi
+mkdir -p screenshots
+git add .
+git commit -m "docs: tum siber guvenlik analizleri, scriptler ve loglar eklendi"
+git push origin main
