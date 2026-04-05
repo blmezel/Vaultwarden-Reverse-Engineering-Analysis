@@ -90,3 +90,18 @@ Dokümantasyon: Markdown, Mermaid.js.
 
 🌐 7. Gelecek Çalışma: Modern Audit Dashboard
 Analiz verilerini interaktif bir panel üzerinden sunacak olan HTML/CSS tabanlı "Audit Dashboard" bir sonraki fazda projeye dahil edilecektir.
+
+---
+
+### 🔬 Özel Güvenlik Aracı: Komut Çevirici (Disassembler)
+
+Vaultwarden gibi derlenmiş (compiled) ve yüksek güvenlikli sistemlerin çekirdek komut akışını (instruction flow) en alt seviyede analiz edebilmek için projeye özel bir **Disassembler** modülü kodlanmıştır.
+
+* **Kullanılan Teknoloji:** Rust & Capstone Engine (`x86_64` mimarisi)
+* **Amaç:** Makine dilindeki anlamsız Hex/Opcode bayt dizilimlerini (örn: `B8 34 12 00...`), analiz edilebilir Assembly komutlarına (`mov eax, 0x1234`) dönüştürerek tersine mühendislik süreçlerini otomatize etmek.
+
+**Nasıl Çalıştırılır?**
+```bash
+cd komut-cevirici
+cargo run
+
