@@ -1,8 +1,44 @@
+
 <div align="center">
-          <img width="320" height="320" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/3debbd6f-edb2-4c3b-bbb6-ab19c460183c" />
+       
+<img width="320" height="320" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/7be1d44d-0ec2-4315-96c2-04e56145a53c" />
 
+# 🛡️ Vaultwarden: Güvenlik Analizi ve Tersine Mühendislik Raporu
 
+**Analist:** Ezel Balım Atik  
+**Kurum:** İstinye Üniversitesi  
+**Bölüm:** Bilişim Güvenliği Teknolojisi  
+**Ders:** Tersine Mühendislik (Vize Projesi)  
+**Eğitmen:** Keyvan Arasteh  
+**Tarih:** Mart 2026  
 
+🚀 **[CANLI SİBER GÜVENLİK PANELİNİ GÖRÜNTÜLEMEK İÇİN TIKLAYIN](https://blmezel.github.io/Vaultwarden-Reverse-Engineering-Analysis/)**
+
+---
+
+## 📊 1. Proje Genel Bakışı
+**Özet:** Bu rapor, Vaultwarden (Rust tabanlı şifre yönetim sistemi) platformunun mimari güvenliğini, konteyner izolasyonunu ve potansiyel zafiyet noktalarını detaylandırmaktadır.
+
+* **📌 Kapsam:** 9 Adım (5 Zorunlu + 4 Bonus Denetim)
+* **⚠️ Zafiyet Seviyesi:** Orta/Kritik (Kurulum ve İzolasyon süreçlerinde bulgular)
+* **🛡️ Savunma Durumu:** Aktif (Ezel-Audit & Fail2Ban Entegrasyonu sağlandı)
+
+## 🏗️ 2. Mimari Akış ve Savunma Katmanları
+
+Aşağıdaki şema, kullanıcının sisteme erişiminden veritabanına kadar olan süreci ve aradaki güvenlik katmanlarını temsil eder:
+
+```mermaid
+graph TD
+    User((Kullanıcı)) -->|HTTPS/JWT| Web[Vaultwarden Web UI]
+    Web -->|API Requests| API[Rust API Server]
+    API -->|Vault Data| DB[(SQLite Database)]
+    API -->|Logs| LogFile[vaultwarden.log]
+    
+    subgraph "Entegre Savunma Sistemleri"
+    API -.->|Ezel-Audit| Scan[Güvenlik Taraması]
+    API -.->|Protect| F2B[Fail2Ban IP Bloklama]
+    API -.->|Verify| Hash[İmza Kontrolü]
+    end
 🕵️‍♂️ 3. Teknik Metodoloji ve Kritik Bulgular
 🔍 3.1. Kurulum ve Hash Analizi (Adım 1)
 Soru: Dış kaynaklı paketlerde imza kontrolü yapılıyor mu?
@@ -23,6 +59,7 @@ Analiz: Webhook'ların birer HTTP callback mekanizması olduğu ve projenin otom
 Docker vs VM: İzolasyon seviyeleri karşılaştırılmış, Docker'ın çekirdek paylaşımı ve VM'in donanım sanallaştırma farkları incelenmiştir.
 
 JWT Güvenliği: Kimlik doğrulama süreçlerindeki "Token Hijacking" riskleri teorik olarak analiz edilmiştir.
+
 
 🛠️ 4. Geliştirilen Özel Savunma Araçları
 🛡️ Ezel-Audit Bash Script (Bonus 11)
@@ -68,6 +105,7 @@ Kullanılan Teknoloji: Rust & Capstone Engine (x86_64 mimarisi)
 Amaç: Makine dilindeki anlamsız Hex/Opcode bayt dizilimlerini (örn: B8 34 12 00...), analiz edilebilir Assembly komutlarına (mov eax, 0x1234) dönüştürerek tersine mühendislik süreçlerini otomatize etmek.
 
 Nasıl Çalıştırılır?
-Bash
+
 cd komut-cevirici
 cargo run
+
