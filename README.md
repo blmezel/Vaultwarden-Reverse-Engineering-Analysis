@@ -23,6 +23,7 @@
 * **🛡️ Savunma Durumu:** Aktif (Ezel-Audit & Fail2Ban Entegrasyonu sağlandı)
 
 ## 🏗️ 2. Mimari Akış ve Savunma Katmanları
+
 Aşağıdaki şema, kullanıcının sisteme erişiminden veritabanına kadar olan süreci ve aradaki güvenlik katmanlarını temsil eder:
 
 ```mermaid
@@ -37,7 +38,6 @@ graph TD
     API -.->|Protect| F2B[Fail2Ban IP Bloklama]
     API -.->|Verify| Hash[İmza Kontrolü]
     end
-
 
 ## 🕵️‍♂️ 3. Teknik Metodoloji ve Kritik Bulgular
 
