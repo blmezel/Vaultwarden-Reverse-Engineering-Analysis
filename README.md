@@ -104,5 +104,5 @@ cargo run
 ## 🎬 Proje Demosu ve Yapay Zeka Analizi
 Projenin derlenme, çalışma ve hata ayıklama (debugging) süreçleri otomatik test motoru **Antigravity AI** tarafından incelenmiş ve kayıt altına alınmıştır.
 
-* 🎥 **Test Videosu:** [Buraya Tıklayarak İzleyebilirsiniz](./demo/proje_demo.mp4)
+* 🎥 **Test Videosu:** [Buraya Tıklayarak İzleyebilirsiniz](./demo/Video%20Projesi%201.mp4)
 * 🤖 **AI Analiz Raporu:** [ANTIGRAVITY_ANALYSIS.md](./ANTIGRAVITY_ANALYSIS.md)
