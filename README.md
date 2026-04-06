@@ -96,10 +96,11 @@ Vaultwarden gibi derlenmiş (compiled) ve yüksek güvenlikli sistemlerin çekir
 * **Amaç:** Makine dilindeki anlamsız Hex/Opcode bayt dizilimlerini (örn: `B8 34 12 00...`), analiz edilebilir Assembly komutlarına (`mov eax, 0x1234`) dönüştürerek tersine mühendislik süreçlerini otomatize etmek.
 
 ### Nasıl Çalıştırılır?
+
 ```bash
 cd komut-cevirici
 cargo run
-
+```
 🎬 Proje Demosu ve Yapay Zeka Analizi
 Projenin derlenme, çalışma ve hata ayıklama (debugging) süreçleri otomatik test motoru Antigravity AI tarafından incelenmiş ve kayıt altına alınmıştır.
 
