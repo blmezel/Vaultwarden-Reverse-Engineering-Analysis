@@ -10,6 +10,9 @@ Ders: Tersine Mühendislik (Vize Projesi)
 
 Tarih: Mart 2026
 
+🚀 **[CANLI SİBER GÜVENLİK PANELİNİ GÖRÜNTÜLEMEK İÇİN TIKLAYIN](https://blmezel.github.io/Vaultwarden-Reverse-Engineering-Analysis/)
+
+
 📊 1. Proje Genel Bakışı
 Özet: Bu rapor, Vaultwarden (Rust tabanlı şifre yönetim sistemi) platformunun mimari güvenliğini, konteyner izolasyonunu ve potansiyel zafiyet noktalarını detaylandırmaktadır.
 
