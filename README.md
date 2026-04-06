@@ -37,7 +37,10 @@ graph TD
     API -.->|Protect| F2B[Fail2Ban IP Bloklama]
     API -.->|Verify| Hash[İmza Kontrolü]
     end
+
+
 ## 🕵️‍♂️ 3. Teknik Metodoloji ve Kritik Bulgular
+
 
 ### 🔍 3.1. Kurulum ve Hash Analizi (Adım 1)
 * **Soru:** Dış kaynaklı paketlerde imza kontrolü yapılıyor mu?
