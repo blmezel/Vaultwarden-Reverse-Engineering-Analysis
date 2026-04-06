@@ -100,3 +100,9 @@ Vaultwarden gibi derlenmiş (compiled) ve yüksek güvenlikli sistemlerin çekir
 cd komut-cevirici
 cargo run
 
+## 🎬 Proje Demosu ve Yapay Zeka Analizi
+Projenin derlenme, çalışma ve hata ayıklama (debugging) süreçleri otomatik test motoru **Antigravity AI** tarafından incelenmiş ve kayıt altına alınmıştır.
+
+* 🎥 **Test Videosu:** [Buraya Tıklayarak İzleyebilirsiniz](./demo/proje_demo.mp4)
+* 🤖 **AI Analiz Raporu:** [ANTIGRAVITY_ANALYSIS.md](./ANTIGRAVITY_ANALYSIS.md)
+
