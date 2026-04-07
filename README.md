@@ -7,7 +7,8 @@
 
 # 🛡️ Vaultwarden: Güvenlik Analizi ve Tersine Mühendislik Raporu
 
-![İstinye Üniversitesi](https://www.istinye.edu.tr/sites/default/files/2021-03/isu-logo-tr.png)
+
+<img width="320" height="320" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/5b2820a9-0120-4b2b-b0a6-98c56e48a8f7" />
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Security Audit](https://img.shields.io/badge/security-audited-blue)
