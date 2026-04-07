@@ -2,6 +2,9 @@
 <div align="center">
        
 <img width="320" height="320" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/7be1d44d-0ec2-4315-96c2-04e56145a53c" />
+
+
+
 # 🛡️ Vaultwarden: Güvenlik Analizi ve Tersine Mühendislik Raporu
 
 **Analist:** Ezel Balım Atik  
