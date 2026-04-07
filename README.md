@@ -2,7 +2,6 @@
 <div align="center">
        
 <img width="320" height="320" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/7be1d44d-0ec2-4315-96c2-04e56145a53c" />
-
 # 🛡️ Vaultwarden: Güvenlik Analizi ve Tersine Mühendislik Raporu
 
 **Analist:** Ezel Balım Atik  
@@ -13,6 +12,19 @@
 **Tarih:** Mart 2026  
 
 🚀 **[CANLI SİBER GÜVENLİK PANELİNİ GÖRÜNTÜLEMEK İÇİN TIKLAYIN](https://blmezel.github.io/Vaultwarden-Reverse-Engineering-Analysis/)**
+
+---
+
+## 📑 İçindekiler
+* [1. Proje Genel Bakışı](#-1-proje-genel-bakışı)
+* [2. Mimari Akış ve Savunma Katmanları](#-2-mimari-akış-ve-savunma-katmanları)
+* [3. Teknik Metodoloji ve Kritik Bulgular](#-3-teknik-metodoloji-ve-kritik-bulgular)
+* [4. Geliştirilen Özel Savunma Araçları](#-4-geliştirilen-özel-savunma-araçları)
+* [5. DevSecOps ve Repo Standartları](#-5-devsecops-ve-repo-standartları)
+* [6. Araştırmacı Ayak İzi (Logbook)](#-6-araştırmacı-ayak-izi-logbook)
+* [7. Gelecek Çalışma: Modern Audit Dashboard](#-7-gelecek-çalışma-modern-audit-dashboard)
+* [8. Özel Güvenlik Aracı: Komut Çevirici](#-özel-güvenlik-aracı-komut-çevirici-disassembler)
+* [🎬 Proje Demosu ve Yapay Zeka Analizi](#-proje-demosu-ve-yapay-zeka-analizi)
 
 ---
 
@@ -45,7 +57,7 @@ Sistem mimarisi ve güvenlik katmanları şu şekilde işlemektedir:
 * **Bulgu:** `/data` dizini altındaki SQLite log dosyalarının (`-wal`, `-shm`) sistem silinse dahi diskte kaldığı ispatlanmıştır.
 
 ### ⚙️ 3.3. CI/CD ve Otomasyon (Adım 3)
-* **Analiz:** Webhook'ların birer HTTP callback mekanizması olduğu ve projenin otomasyon şeffaflığı analiz edilmiştir. `.github/workflows` eksikliği raporlanmıştır.
+* **Analiz:** Webhook'ların birer HTTP callback mekanizması olduğu ve projenin otomasyon şeffaflığı analiz edilmiştir.
 
 ### 🐳 3.4. Konteyner Mimarisi (Adım 4 & 5)
 * **Docker vs VM:** İzolasyon seviyeleri karşılaştırılmış, Docker'ın çekirdek paylaşımı ve VM'in donanım sanallaştırma farkları incelenmiştir.
@@ -67,7 +79,16 @@ Manuel denetimleri otomatize etmek için geliştirilen bu araç şu kontrolleri 
 
 ---
 
-## 📝 5. Araştırmacı Ayak İzi (Logbook)
+## ⚙️ 5. DevSecOps ve Repo Standartları
+Projenin sürdürülebilirliği ve otomasyonu için endüstri standartlarında modern güvenlik ve dağıtım yapılandırmaları projeye dahil edilmiştir:
+* **CI/CD Pipeline:** `.github/workflows/rust.yml` ile kodların otomatik derlenme süreçleri.
+* **Konteynerizasyon:** `Dockerfile` üzerinden Alpine tabanlı hafif ve izole Rust ortamı.
+* **Ortam Değişkenleri:** Güvenlik ihlallerini önlemek adına şablonlandırılmış `.env.example` yapısı.
+* **Git Yapılandırması:** Platformlar arası satır sonu uyumluluğu için `.gitattributes`.
+
+---
+
+## 📝 6. Araştırmacı Ayak İzi (Logbook)
 Süreç boyunca terminalde karşılaşılan krizler ve uygulanan çözümler:
 
 * 🚩 **0 Byte Script Dosyaları:** `port-check.sh` fonksiyonel kodla doldurularak sorun giderildi. (Durum: ✅)
@@ -76,20 +97,12 @@ Süreç boyunca terminalde karşılaşılan krizler ve uygulanan çözümler:
 
 ---
 
-## 🧰 6. Kullanılan Araç Seti (Toolkit)
-* **Ağ Analizi:** Nmap, netstat
-* **Güvenlik:** `ezel-audit.sh`, Fail2Ban
-* **Sanal Ortam:** Docker Engine, Alpine Linux
-* **Dokümantasyon:** Markdown
-
----
-
 ## 🌐 7. Gelecek Çalışma: Modern Audit Dashboard
 Analiz verilerini interaktif bir panel üzerinden sunacak olan HTML/CSS tabanlı **"Audit Dashboard"** bir sonraki fazda projeye dahil edilecektir.
 
 ---
 
-## 🔬 Özel Güvenlik Aracı: Komut Çevirici (Disassembler)
+## 🔬 8. Özel Güvenlik Aracı: Komut Çevirici (Disassembler)
 Vaultwarden gibi derlenmiş (compiled) ve yüksek güvenlikli sistemlerin çekirdek komut akışını (instruction flow) en alt seviyede analiz edebilmek için projeye özel bir **Disassembler** modülü kodlanmıştır.
 
 * **Kullanılan Teknoloji:** Rust & Capstone Engine (`x86_64` mimarisi)
@@ -101,6 +114,7 @@ Vaultwarden gibi derlenmiş (compiled) ve yüksek güvenlikli sistemlerin çekir
 cd komut-cevirici
 cargo run
 ```
+
 ## 🎬 Proje Demosu ve Yapay Zeka Analizi
 Projenin derlenme, çalışma ve hata ayıklama (debugging) süreçleri otomatik test motoru **Antigravity AI** tarafından incelenmiş ve kayıt altına alınmıştır.
 
