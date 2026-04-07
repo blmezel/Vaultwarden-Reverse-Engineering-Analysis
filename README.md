@@ -7,6 +7,12 @@
 
 # 🛡️ Vaultwarden: Güvenlik Analizi ve Tersine Mühendislik Raporu
 
+![İstinye Üniversitesi](https://www.istinye.edu.tr/sites/default/files/2021-03/isu-logo-tr.png)
+
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Security Audit](https://img.shields.io/badge/security-audited-blue)
+
+
 **Analist:** Ezel Balım Atik  
 **Kurum:** İstinye Üniversitesi  
 **Bölüm:** Bilişim Güvenliği Teknolojisi  
